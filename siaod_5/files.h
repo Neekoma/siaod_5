@@ -12,8 +12,8 @@ using namespace std;
 
 struct FileNode {
 	int number;
-	int left;
-	int right;
+	int left = -1;
+	int right = -1;
 	Bank data;
 };
 

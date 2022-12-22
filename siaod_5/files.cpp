@@ -6,7 +6,6 @@ void readTxt(Tree& t) {
 	if (!fi.is_open())
 		exit(-1);
 
-
 	Bank b;
 
 	while (!fi.eof()) {
@@ -36,10 +35,14 @@ int writeNode(Node* node, ofstream& fo, int num)
 	int lnum = num;
 	fnode.data = fnode.data = node->data;
 	fo.write((char*)&fnode, sizeof(FileNode));
-	if(node->left)
-		fnode.left = num = writeNode(node->left, fo, ++num);
-	if(node->right)
-		fnode.right = num = writeNode(node->right, fo, ++num);
+	if (node->left) {
+		fnode.left = ++num;
+		writeNode(node->left, fo, num);
+	}
+	if (node->right) {
+		fnode.right = ++num;
+		writeNode(node->right, fo, num);
+	}
 	fo.seekp(lnum * sizeof(FileNode));
 	fo.write((char*)&fnode, sizeof(FileNode));
 	return num;
