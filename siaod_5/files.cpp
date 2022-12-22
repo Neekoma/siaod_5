@@ -27,9 +27,6 @@ void writeBin(Tree& t)
 
 int writeNode(Node* node, ofstream& fo, int num)
 {
-	if (node == nullptr)
-		return num - 1;
-
 	FileNode fnode;
 	fnode.number = num;
 	int lnum = num;
@@ -37,11 +34,11 @@ int writeNode(Node* node, ofstream& fo, int num)
 	fo.write((char*)&fnode, sizeof(FileNode));
 	if (node->left) {
 		fnode.left = ++num;
-		writeNode(node->left, fo, num);
+		num = writeNode(node->left, fo, num);
 	}
 	if (node->right) {
 		fnode.right = ++num;
-		writeNode(node->right, fo, num);
+		num = writeNode(node->right, fo, num);
 	}
 	fo.seekp(lnum * sizeof(FileNode));
 	fo.write((char*)&fnode, sizeof(FileNode));
